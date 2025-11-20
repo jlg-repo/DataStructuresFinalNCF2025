@@ -1,7 +1,12 @@
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 public class GraphTest {
     
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws FileNotFoundException {
+
+        PrintStream GraphTxt = new PrintStream("Graph Output.txt");
+        System.setOut(GraphTxt);
         // Test 1: Directed Weighted Graph (like the PDF example)
         System.out.println("TEST 1: Directed Weighted Graph");
         System.out.println("================================");
@@ -78,6 +83,7 @@ public class GraphTest {
 
         undirectedUnweightedGraph.printGraph();
         undirectedUnweightedGraph.printEdges(2);
+
 
     }
 }
