@@ -31,13 +31,13 @@ public class ModifiedGraphTest {
         undirectedGraph.printEdges(4);
 
         // Print the subgraph containing vertices {1, 2, 4}
-        List<Integer> vertices = new ArrayList<Integer>(3);
+        //List<Integer> vertices = new ArrayList<Integer>(3);
         //vertices.add(1);
         //vertices.add(2);
         //vertices.add(4);
-        vertices.add(5);
-        vertices.add(3);
-        undirectedGraph.createAndPrintSubgraph(vertices);
+        //vertices.add(5);
+        //vertices.add(3);
+        //undirectedGraph.createAndPrintSubgraph(vertices);
 
 
         // Delete vertex 5

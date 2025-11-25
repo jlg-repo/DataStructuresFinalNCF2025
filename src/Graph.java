@@ -1,5 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
+
 
 public class Graph {
     private int maxVertices;
@@ -156,6 +159,125 @@ public class Graph {
 
     public Graph getGraph() {
         return this;
+    }
+
+    // other getters
+
+    public double[][] getAdjacencyMatrix() {return adjacencyMatrix;}
+    public boolean[] getVertexExists() {return vertexExists;}
+    public int getMaxVertices() {return maxVertices;}
+    public boolean isDirected() {return directed;}
+    public boolean isWeighted() {return weighted;}
+
+
+    // helper methods for path search
+
+    private boolean dfsPath(int current, int target, boolean[] visited, List<Integer> path) {
+        visited[current] = true;
+        path.add(current);
+
+        if (current == target) {
+            return true;
+        }
+
+        for (int i = 0; i < maxVertices; i++) {
+            if (adjacencyMatrix[current][i] != -1 && !visited[i]) {
+                if (dfsPath(i, target, visited, path)) {
+                    return true;
+                }
+            }
+        }
+
+        path.remove(path.size() -1);
+        return false;
+
+
+    }
+
+    public double getPathCost(List<Integer> path) {
+        double cost = 0;
+        for (int i = 0; i < path.size(); i++) {
+            cost += adjacencyMatrix[path.get(i)][path.get(i+1)];
+
+        }
+        return cost;
+    }
+
+    private boolean dfsCycle(int current, boolean[] visited, boolean[] inStack, List<Integer> cycle) {
+
+        visited[current] = true;
+        inStack[current] = true;
+
+        for (int i = 0; i < maxVertices; i++) {
+            if (adjacencyMatrix[current][i] != -1) {
+                if (!visited[i]) {
+                    if (dfsCycle(i, visited, inStack, cycle)) {
+                        cycle.add(0, current);
+                        return true;
+                    }
+                } else if (inStack[i]) {
+                    cycle.add(i);
+                    cycle.add(0, current);
+                    return true;
+                }
+            }
+        }
+
+        inStack[current] = false;
+        return false;
+    }
+
+
+    //Uses DFS
+
+    public List<Integer> findPath() {
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter start vertex: ");
+        int from = scnr.nextInt();
+        System.out.println("Enter end vertex: ");
+        int to = scnr.nextInt();
+
+        if (from < 0 || from >= maxVertices || to < 0 || to >= maxVertices) {
+            System.out.println("Invalid vertex number");
+            return null;
+        }
+
+        if (!vertexExists[from] || !vertexExists[to]) {
+            System.out.println("One of the vertices does not exist");
+            return null;
+
+        }
+
+        boolean[] visited = new boolean[maxVertices];
+        List<Integer> path = new ArrayList<>();
+
+        if (dfsPath(from, to, visited, path)) {
+            System.out.println("Path found: " + path);
+            System.out.println("Path cost: " + (int) getPathCost(path));
+            return path;
+        }
+
+        else {System.out.println("Path not found"); return null;}
+
+    }
+
+    public List<Integer> findCycle(){
+
+        boolean[] visited = new boolean[maxVertices];
+        boolean[] inStack = new boolean[maxVertices];
+        List<Integer> cycle = new ArrayList<>();
+
+        for (int i = 0; i < maxVertices; i++) {
+            if (vertexExists[i] && !visited[i]) {
+                if (dfsCycle(i, visited, inStack, cycle)) {
+                    System.out.println("Cycle found: " + cycle);
+                    return cycle;
+                }
+            }
+        }
+
+        System.out.println("Cycle not found");
+        return cycle;
     }
 
 }
