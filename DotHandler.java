@@ -4,7 +4,7 @@ import java.io.OutputStreamWriter;
 
 public class DotHandler {
     public void writeDot(Graph e) {
-            try(BufferedWriter out= new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Graph.dot")))){
+            try(BufferedWriter out= new BufferedWriter(new OutputStreamWriter(new FileOutputStream("DOTGraph.dot")))){
         out.write("Directed Graph");
           out.newLine();
           int maxV = e.getMaxVertices();
