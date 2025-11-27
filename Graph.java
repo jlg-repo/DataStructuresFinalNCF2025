@@ -97,7 +97,19 @@ public class Graph {
             }
         }
     }
-
+    // getters for DOTMAN
+    public int getMaxVertices(){
+        return maxVertices;
+    }
+    public boolean vertexExists(int v){
+        return vertexExists[v];
+    }
+    public double getEdgeWeight(int from,int to){
+        return adjacencyMatrix[from][to];
+    }
+    public boolean isWeighted() {
+        return weighted;
+    }
     // Print edges from a specific vertex
     public void printEdges(int v) {
         if (v >= 0 && v < maxVertices && vertexExists[v]) {
@@ -132,6 +144,8 @@ public class Graph {
                 System.out.println("vertex: " + v);
             }
         }
+
+        
 
         // Print edges between vertices in subgraph
         System.out.println("\nEdges in subgraph:");
