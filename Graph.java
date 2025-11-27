@@ -71,7 +71,7 @@ public class Graph {
 
     // Print all vertices
     public void printVertices() {
-        System.out.println("Printing the vertices of the graph:");
+        System.out.println("\nPrinting the vertices of the graph:");
         for (int i = 0; i < maxVertices; i++) {
             if (vertexExists[i]) {
                 System.out.println("vertex: " + i);
@@ -81,7 +81,7 @@ public class Graph {
 
     // Print all edges
     public void printEdges() {
-        System.out.println("Printing the edges of the graph:");
+        System.out.println("\nPrinting the edges of the graph:");
         for (int i = 0; i < maxVertices; i++) {
             if (vertexExists[i]) {
                 for (int j = 0; j < maxVertices; j++) {
@@ -101,7 +101,7 @@ public class Graph {
     // Print edges from a specific vertex
     public void printEdges(int v) {
         if (v >= 0 && v < maxVertices && vertexExists[v]) {
-            System.out.println("Edges from vertex " + v + ":");
+            System.out.println("\nEdges from vertex " + v + ":");
             for (int i = 0; i < maxVertices; i++) {
                 if (adjacencyMatrix[v][i] != -1) {
                     if (weighted) {
@@ -118,15 +118,15 @@ public class Graph {
 
     // Print the entire graph
     public void printGraph() {
-        System.out.println("=== Graph (" + (directed ? "Directed" : "Undirected") + ") ===");
+        System.out.println("\n=== Graph (" + (directed ? "Directed" : "Undirected") + ") ===");
         printVertices();
         printEdges();
     }
     public void createAndPrintSubgraph(List<Integer> vertices) {
-        System.out.println("=== Subgraph ===");
+        System.out.println("\n=== Subgraph ===");
 
         // Print vertices in subgraph
-        System.out.println("Vertices in subgraph:");
+        System.out.println("\nVertices in subgraph:");
         for (int v : vertices) {
             if (v >= 0 && v < maxVertices && vertexExists[v]) {
                 System.out.println("vertex: " + v);
@@ -134,7 +134,7 @@ public class Graph {
         }
 
         // Print edges between vertices in subgraph
-        System.out.println("Edges in subgraph:");
+        System.out.println("\nEdges in subgraph:");
         for (int i : vertices) {
             if (vertexExists[i]) {
                 for (int j : vertices) {
@@ -151,18 +151,6 @@ public class Graph {
         }
     }
 
-    public int getMaxVertices(){
-        return maxVertices;
-    }
-    public boolean vertexExists(int v){
-        return vertexExists[v];
-    }
-    public double getEdgeWeight(int from,int to){
-        return adjacencyMatrix[from][to];
-    }
-    public boolean isWeighted() {
-        return weighted;
-    }
 }
 
 /*
