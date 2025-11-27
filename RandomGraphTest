@@ -1,0 +1,47 @@
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
+public class RandomGraphTest {
+    public static void main(String[] args) throws FileNotFoundException {
+        // p and q must be primes where p % 4 == 3 and q % 4 == 3
+        Randomizer rand = new Randomizer(12345, 11, 19);  // seed=12345, p=11, q=19
+
+        // Generate random number of vertices=
+        int numVertices = rand.nextInt(13) + 3;  // 3 to 15
+
+        System.out.println("Creating random directed weighted graph...");
+        System.out.println("Number of vertices: " + numVertices);
+
+        // Create directed weighted graph
+        Graph graph = new Graph(numVertices, true, true);
+
+        // Add all vertices
+        for (int i = 0; i < numVertices; i++) {
+            graph.addVertex(i);
+        }
+
+        // Add random edges
+        int edgeCount = 0;
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                if (i != j && rand.nextInt(10) < 3) {  // 30% chance
+                    int weight = rand.nextInt(100) + 1;  // weight 1-100
+                    graph.addEdge(i, j, weight);
+                    edgeCount++;
+                }
+            }
+        }
+        System.out.println("Number of edges: " + edgeCount);
+
+        // Print the graph
+        graph.printGraph();
+
+        // Check for cycles
+        System.out.println("\n--- Cycle Detection ---");
+        graph.findCycle();
+
+        // Find path
+        System.out.println("\n--- Path Finding ---");
+        graph.findPath();
+    }
+}
