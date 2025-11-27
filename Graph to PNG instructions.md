@@ -12,7 +12,7 @@
 
 
 
-##### Once installed, navigate to System Properties (view advanced system settings)
+###### Once installed, navigate to System Properties (view advanced system settings)
 
 ###### Click on Environment Variables
 
@@ -39,4 +39,5 @@
 ###### Compile the file with 'javac GraphVisualizer.java'
 
 ###### Run the file with 'java GraphVisualizer'
+
 
