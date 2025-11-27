@@ -17,7 +17,7 @@ public class GraphTest {
         for (int i = 0; i < 5; i++) {
             directedGraph.addVertex(i);
         }
-        
+
         // Add edges with weights
         directedGraph.addEdge(0, 0, 1997);
         directedGraph.addEdge(1, 0, 175);
@@ -84,6 +84,7 @@ public class GraphTest {
         undirectedUnweightedGraph.printGraph();
         undirectedUnweightedGraph.printEdges(2);
 
-
+        DotHandler DotMan = new DotHandler();
+        DotMan.writeDot(directedGraph);
     }
 }
