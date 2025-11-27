@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Graph {
     private int maxVertices;
@@ -134,6 +136,137 @@ public class Graph {
         printVertices();
         printEdges();
     }
+
+    // Compatibility getters
+    public boolean vertexExists(int v) {
+        return vertexExists[v];
+    }
+
+    public double getEdgeWeight(int from, int to) {
+        return adjacencyMatrix[from][to];
+    }
+
+    // Additional getters
+    public Graph getGraph() {
+        return this;
+    }
+
+    public double[][] getAdjacencyMatrix() {
+        return adjacencyMatrix;
+    }
+
+    public boolean[] getVertexExists() {
+        return vertexExists;
+    }
+
+    public boolean isDirected() {
+        return directed;
+    }
+
+    // Path finding helpers
+    private boolean dfsPath(int current, int target, boolean[] visited, List<Integer> path) {
+        visited[current] = true;
+        path.add(current);
+
+        if (current == target) {
+            return true;
+        }
+
+        for (int i = 0; i < maxVertices; i++) {
+            if (adjacencyMatrix[current][i] != -1 && !visited[i]) {
+                if (dfsPath(i, target, visited, path)) {
+                    return true;
+                }
+            }
+        }
+
+        path.remove(path.size() - 1);
+        return false;
+    }
+
+    public double getPathCost(List<Integer> path) {
+        double cost = 0;
+        for (int i = 0; i < path.size() - 1; i++) {  // Fixed: was path.size()
+            cost += adjacencyMatrix[path.get(i)][path.get(i + 1)];
+        }
+        return cost;
+    }
+
+    // Cycle detection helper
+    private boolean dfsCycle(int current, boolean[] visited, boolean[] inStack, List<Integer> cycle) {
+        visited[current] = true;
+        inStack[current] = true;
+
+        for (int i = 0; i < maxVertices; i++) {
+            if (adjacencyMatrix[current][i] != -1) {
+                if (!visited[i]) {
+                    if (dfsCycle(i, visited, inStack, cycle)) {
+                        cycle.add(0, current);
+                        return true;
+                    }
+                } else if (inStack[i]) {
+                    cycle.add(i);
+                    cycle.add(0, current);
+                    return true;
+                }
+            }
+        }
+
+        inStack[current] = false;
+        return false;
+    }
+
+    // Find path using DFS with user input
+    public List<Integer> findPath() {
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("Enter start vertex: ");
+        int start = scnr.nextInt();
+        System.out.print("Enter end vertex: ");
+        int end = scnr.nextInt();
+
+        if (start < 0 || start >= maxVertices || end < 0 || end >= maxVertices) {
+            System.out.println("Invalid vertex number.");
+            return null;
+        }
+
+        if (!vertexExists[start] || !vertexExists[end]) {
+            System.out.println("One or both vertices do not exist.");
+            return null;
+        }
+
+        boolean[] visited = new boolean[maxVertices];
+        List<Integer> path = new ArrayList<>();
+
+        if (dfsPath(start, end, visited, path)) {
+            System.out.println("Path found: " + path);
+            System.out.println("Path cost: " + (int) getPathCost(path));
+            return path;
+        }
+
+        System.out.println("No path exists from " + start + " to " + end);
+        return null;
+    }
+
+    // Find cycle in graph
+    public List<Integer> findCycle() {
+        boolean[] visited = new boolean[maxVertices];
+        boolean[] inStack = new boolean[maxVertices];
+        List<Integer> cycle = new ArrayList<>();
+
+        for (int i = 0; i < maxVertices; i++) {
+            if (vertexExists[i] && !visited[i]) {
+                if (dfsCycle(i, visited, inStack, cycle)) {
+                    System.out.println("Cycle found: " + cycle);
+                    return cycle;
+                }
+            }
+        }
+
+        System.out.println("No cycle exists in the graph.");
+        return cycle;
+    }
+
+
     public void createAndPrintSubgraph(List<Integer> vertices) {
         System.out.println("\n=== Subgraph ===");
 
