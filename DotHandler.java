@@ -6,7 +6,7 @@ import java.io.IOException;
 public class DotHandler {
     public void writeDot(Graph e){
         try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("DOTGraph.dot")))) {
-            out.write("Directed Graph");
+            out.write("digraph{");
             out.newLine();
             int maxV = e.getMaxVertices();
             for (int i = 0; i < maxV; i++) {
@@ -26,6 +26,7 @@ public class DotHandler {
                     }
                 }
             }
+            out.write("}");
         }
         catch (IOException b){
             b.printStackTrace();
