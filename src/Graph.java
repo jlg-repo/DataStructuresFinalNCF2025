@@ -196,7 +196,7 @@ public class Graph {
 
     public double getPathCost(List<Integer> path) {
         double cost = 0;
-        for (int i = 0; i < path.size(); i++) {
+        for (int i = 0; i < path.size()-1; i++) {
             cost += adjacencyMatrix[path.get(i)][path.get(i+1)];
 
         }
