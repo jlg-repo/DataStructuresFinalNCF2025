@@ -50,4 +50,3 @@ public class Randomizer {
         return Math.abs(result) % max;
     }
 }
-
