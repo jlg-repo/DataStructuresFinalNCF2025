@@ -151,6 +151,18 @@ public class Graph {
         }
     }
 
+    public int getMaxVertices(){
+        return maxVertices;
+    }
+    public boolean vertexExists(int v){
+        return vertexExists[v];
+    }
+    public double getEdgeWeight(int from,int to){
+        return adjacencyMatrix[from][to];
+    }
+    public boolean isWeighted() {
+        return weighted;
+    }
 }
 
 /*
